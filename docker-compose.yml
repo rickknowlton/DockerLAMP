@@ -15,7 +15,8 @@ services:
       - 8000:80
     environment:
       PHP_INI_ERROR_LOG: /var/log/apache2/error.log
-
+    networks: 
+      - test_db        
   db:
     container_name: mysql8
     image: mysql:8.0
@@ -31,13 +32,22 @@ services:
       - 6033:3306
     volumes:
       - "./db:/docker-entrypoint-initdb.d"
+    networks: 
+      - test_db        
   phpmyadmin:
+    depends_on:
+      - db  
     image: phpmyadmin/phpmyadmin
     ports: 
       - 8001:80
     environment:
       - PMA_HOST=db
       - PMA_PORT=3306
+    networks: 
+      - test_db  
 volumes:
   logs:
     driver: local
+networks:
+  test_db:
+    driver: bridge
