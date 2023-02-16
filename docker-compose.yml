@@ -26,18 +26,9 @@ services:
       MYSQL_DATABASE: test_db
       MYSQL_USER: devuser
       MYSQL_PASSWORD: devpass
-      MYSQL_ALLOW_EMPTY_PASSWORD: 1
     ports:
       - 6033:3306
-    volumes:
-      - "./db:/docker-entrypoint-initdb.d"
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    ports: 
-      - 8001:80
-    environment:
-      - PMA_HOST=db
-      - PMA_PORT=3306
+
 volumes:
   logs:
     driver: local
